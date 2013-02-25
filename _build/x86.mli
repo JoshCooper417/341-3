@@ -148,8 +148,8 @@ type insn =
 (** An insn block (with a label and a list of instructions). *)
 type insn_block = {
   global : bool;
-  xlabel : lbl;
-  xinsns : insn list;
+  label : lbl;
+  insns : insn list;
 }
 
 

@@ -322,11 +322,12 @@ let file_tests : suite = [
   ]);
 
   GradedTest("Easy tests", 15, [ 
-   (*  ("test1", file_test "test1.oat" 4);  
+    ("test1", file_test "test1.oat" 4);  
     ("test2", file_test "test2.oat" 3);
-    ("test3", file_test "test3.oat" 7);*)
+    ("test3", file_test "test3.oat" 7);
     ("test4", file_test "test4.oat" 3);
-   (* ("test5", file_test "test5.oat" 4);
+    ("medium_nest1", file_test "medium_nest1.oat" 100);
+   ("test5", file_test "test5.oat" 4);
     ("test6", file_test "test6.oat" 3);
      ("test7", file_test "test7.oat" 1);
     ("test8", file_test "test8.oat" 5);
@@ -353,7 +354,7 @@ let file_tests : suite = [
   ]);
  
  GradedTest("Medium tests", 10, [
-    ("test11", file_test "test11.oat" 720);	       
+   ("test11", file_test "test11.oat" 720);	       
     ("medium_mw1", file_test "medium_mw1.oat" 10);
     ("medium_mw3", file_test "medium_mw3.oat" (-1));
     ("medium_mw4", file_test "medium_mw4.oat" 20);
@@ -398,10 +399,9 @@ let file_tests : suite = [
   GradedTest("Hard tests", 10, [
     ("bsort", file_test "bsort.oat" 1);
     ("msort", file_test "msort.oat" 1);
-    ("hsort", file_test "hsort.oat" 1);
-    *)]);
+    ("hsort", file_test "hsort.oat" 1);]);
   GradedTest("Stress tests (hidden)", 10, [
-   
+  
   ]);
 ]
 

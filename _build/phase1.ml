@@ -88,7 +88,8 @@ let rec emit_vardecl_stream (v:Ast.var_decl list) (c:Ctxt.t) : (stream*Ctxt.t) =
       let evs = emit_vardecl_stream t c2 in
       let allocinsn = I (Alloca id) in
       let storeinsn = I (Store (Local id,value)) in
-      (fst(evs)@[storeinsn; allocinsn]@defn,snd(evs))
+      (* (fst(evs)@[storeinsn; allocinsn]@defn,snd(evs)) *)
+     (fst(evs)@[storeinsn]@defn@[allocinsn], snd(evs))
     |[]->([],c)
   end
 

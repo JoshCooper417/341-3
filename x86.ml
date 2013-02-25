@@ -73,8 +73,8 @@ type insn =
 (* A insn block (with a label and a list of instructions). *)
 type insn_block = {
   global : bool;
-  xlabel : lbl;
-  xinsns : insn list;
+  label : lbl;
+  insns : insn list;
 }
       
 let lbl_ctr = ref 0
@@ -186,23 +186,23 @@ let string_of_cnd  = function
 
     
 let generic_to_string name (dest, src) =
-    name ^ "l " ^ (string_of_opnd src) ^ ", " ^ (string_of_opnd dest)
+    name ^ "l " ^ (string_of_opnd src) ^ ", " ^ (string_of_opnd dest) ^ "\n"
 
 let shift_to_string name (dest, src) =
   match src with
-    | Imm _ ->  name ^ "l " ^ (string_of_opnd src) ^ ", " ^ (string_of_opnd dest)
-    | Reg Ecx -> name ^ "l " ^ "%cl" ^ ", " ^ (string_of_opnd dest)
+    | Imm _ ->  name ^ "l " ^ (string_of_opnd src) ^ ", " ^ (string_of_opnd dest) ^"\n"
+    | Reg Ecx -> name ^ "l " ^ "%cl" ^ ", " ^ (string_of_opnd dest) ^"\n"
     | _ -> failwith "Shift amount not ECX or immediate"
       
 let oneop_to_string name op =
-    name ^ "l " ^ (string_of_opnd op)
+    name ^ "l " ^ (string_of_opnd op) ^ "\n"
 		
 let lea_to_string (dest,src) =
     "leal" ^ " " ^ (string_of_ind src) ^ ", " ^
         (string_of_reg dest)
 
 let cfop_to_string name op =
-    name ^ " " ^ (cfstring_of_opnd op)
+    name ^ " " ^ (cfstring_of_opnd op) ^ "\n"
 
 
 
@@ -237,20 +237,20 @@ let  string_of_insn = function
         | Ind i -> string_of_ind i in
       let setb_to_string (dest, cc) =
         " set" ^ string_of_cnd cc ^ " " ^ string_of_opnd_low_byte dest in
-      setb_to_string (dest,cc)
+      setb_to_string (dest,cc) ^"\n"
   | Jmp o     -> cfop_to_string " jmp" o
   | Call o    -> cfop_to_string " call" o
   | Ret       -> " ret"
   | J (cond,lbl) ->
       let j_to_string (cc,lbl) =
-        " j" ^ (string_of_cnd cc) ^ " " ^ (string_of_lbl lbl) in j_to_string (cond,lbl)
-  | Imul (d,s)   -> regdest_to_string " imul" (d,s)
+        " j" ^ (string_of_cnd cc) ^ " " ^ (string_of_lbl lbl) in j_to_string (cond,lbl) ^ "\n"
+  | Imul (d,s)   -> regdest_to_string " imul" (d,s)  ^"\n"
 
 
 (* Make an non-global insn block with a particular label. *)
 let mk_insn_block (l:lbl) (body:insn list) : insn_block =
-  {xlabel = l;
-   xinsns = body;
+  {label = l;
+   insns = body;
    global = false}
 
 (* Make a non-global anonymous insn block, generating a fresh label for it. *)
@@ -259,24 +259,24 @@ let mk_ainsn_block (body:insn list) : (lbl * insn_block) =
     (l, mk_insn_block l body)
 
 (* Make an explicitly named non-global insn block. *)
-let mk_block (s:string) (xinsns:insn list) =
-  mk_insn_block (mk_lbl_named s) xinsns
+let mk_block (s:string) (insns:insn list) =
+  mk_insn_block (mk_lbl_named s) insns
 
 (* Write an insn block using the provided printing function. *)
 let serialize_insn_block (blk : insn_block) (pfunc : string -> unit) : unit =
   if blk.global then (
-    pfunc (sprintf ".globl %s\n" (string_of_lbl blk.xlabel))
+    pfunc (sprintf ".globl %s\n" (string_of_lbl blk.label))
   ) else ();
-  pfunc (sprintf "%s:\n" (string_of_lbl blk.xlabel));
+  pfunc (sprintf "%s:\n" (string_of_lbl blk.label));
   List.iter (fun insn -> pfunc (sprintf "\t%s\n" (string_of_insn insn)))
-    blk.xinsns
+    blk.insns
 			
 let string_of_insn_block (blk:insn_block) : string =
   List.fold_left (fun x i -> x ^ string_of_insn i) 
     (if blk.global 
-     then sprintf ".global %s\n" (string_of_lbl blk.xlabel)
-     else sprintf "%s\n" (string_of_lbl blk.xlabel))
-    blk.xinsns
+     then sprintf "%s:\n" (string_of_lbl blk.label)
+     else sprintf "%s:\n" (string_of_lbl blk.label))
+    blk.insns
     
 let pp_insn f i =
   fprintf f "%s" (string_of_insn i)

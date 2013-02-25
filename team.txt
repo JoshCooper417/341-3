@@ -1,6 +1,7 @@
 Team Members:
   <pennkey>	<name>		<email>
-
+jocoop		Josh Cooper	jocoop@sas.upenn.edu
+lshapi		Lauren Shapiro	lshapi@seas.upenn.edu
 
 Known issues with your implementation:
 
@@ -11,22 +12,25 @@ Course Project Feedback:
 ------------------------
 
 1.  How much time did it take to complete this project?
-
+25+ hours
 
 2. How effective was this project? [0-10]: 
 
     0 = learned nothing
    10 = highly educational
+8
 
 3. How engaging was this project? [0-10]:
 
     0 = tedious and boring
    10 = fun and engaging
+8
 
 4. How difficult was this project? [0-10]:
 
     0 = piece of cake
    10 = extremely hard
+8
 
    (note that hard is not necessarily bad, 
     if it's "hard" as in "challenging")

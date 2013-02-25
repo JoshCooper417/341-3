@@ -1,5 +1,3 @@
 int x = 3;
-int y = 300;
-int z = 6;
-if(z == 300) x=1+x;
+if (x == 0) x = x + 1;
 return x;

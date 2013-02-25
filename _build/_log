@@ -112,21 +112,23 @@
 # Target: phase1.cmx, tags: { compile, extension:cmx, extension:ml, file:phase1.cmx, file:phase1.ml, implem, native, ocaml, quiet }
 /usr/local/bin/ocamlopt.opt -c -o phase1.cmx phase1.ml # cached
 # Target: phase2.ml.depends, tags: { extension:ml, file:phase2.ml, ocaml, ocamldep, quiet }
-/usr/local/bin/ocamldep.opt -modules phase2.ml > phase2.ml.depends # cached
+/usr/local/bin/ocamldep.opt -modules phase2.ml > phase2.ml.depends
 # Target: platform.ml.depends, tags: { extension:ml, file:platform.ml, ocaml, ocamldep, quiet }
 /usr/local/bin/ocamldep.opt -modules platform.ml > platform.ml.depends # cached
 # Target: platform.cmx, tags: { compile, extension:cmx, extension:ml, file:platform.cmx, file:platform.ml, implem, native, ocaml, quiet }
 /usr/local/bin/ocamlopt.opt -c -o platform.cmx platform.ml # cached
 # Target: phase2.cmx, tags: { compile, extension:cmx, extension:ml, file:phase2.cmx, file:phase2.ml, implem, native, ocaml, quiet }
-/usr/local/bin/ocamlopt.opt -c -o phase2.cmx phase2.ml # cached
+/usr/local/bin/ocamlopt.opt -c -o phase2.cmx phase2.ml
 # Target: occ.cmx, tags: { compile, extension:cmx, extension:ml, file:occ.cmx, file:occ.ml, implem, native, ocaml, quiet }
-/usr/local/bin/ocamlopt.opt -c -o occ.cmx occ.ml # cached
-# Target: gradedtests.cmx, tags: { compile, extension:cmx, extension:ml, file:gradedtests.cmx, file:gradedtests.ml, implem, native, ocaml, quiet }
-/usr/local/bin/ocamlopt.opt -c -o gradedtests.cmx gradedtests.ml # cached
+/usr/local/bin/ocamlopt.opt -c -o occ.cmx occ.ml
 # Target: providedtests.cmx, tags: { compile, extension:cmx, extension:ml, file:providedtests.cmx, file:providedtests.ml, implem, native, ocaml, quiet }
 /usr/local/bin/ocamlopt.opt -c -o providedtests.cmx providedtests.ml # cached
+# Target: gradedtests.cmx, tags: { compile, extension:cmx, extension:ml, file:gradedtests.cmx, file:gradedtests.ml, implem, native, ocaml, quiet }
+/usr/local/bin/ocamlopt.opt -c -o gradedtests.cmx gradedtests.ml
 # Target: main.cmx, tags: { compile, extension:cmx, extension:ml, file:main.cmx, file:main.ml, implem, native, ocaml, quiet }
-/usr/local/bin/ocamlopt.opt -c -o main.cmx main.ml # cached
+/usr/local/bin/ocamlopt.opt -c -o main.cmx main.ml
 # Target: main.native, tags: { dont_link_with, extension:native, file:main.native, link, native, ocaml, program, quiet }
-/usr/local/bin/ocamlopt.opt unix.cmxa str.cmxa LibUtil.cmx assert.cmx ast.cmx x86.cmx ll.cmx ctxt.cmx cunit.cmx range.cmx parser.cmx lexer.cmx phase1.cmx platform.cmx phase2.cmx occ.cmx gradedtests.cmx providedtests.cmx main.cmx -o main.native # cached
+/usr/local/bin/ocamlopt.opt unix.cmxa str.cmxa LibUtil.cmx assert.cmx ast.cmx x86.cmx ll.cmx ctxt.cmx cunit.cmx range.cmx parser.cmx lexer.cmx phase1.cmx platform.cmx phase2.cmx occ.cmx gradedtests.cmx providedtests.cmx main.cmx -o main.native
++ /usr/local/bin/ocamlopt.opt unix.cmxa str.cmxa LibUtil.cmx assert.cmx ast.cmx x86.cmx ll.cmx ctxt.cmx cunit.cmx range.cmx parser.cmx lexer.cmx phase1.cmx platform.cmx phase2.cmx occ.cmx gradedtests.cmx providedtests.cmx main.cmx -o main.native
+ld: warning: PIE disabled. Absolute addressing (perhaps -mdynamic-no-pic) not allowed in code signed PIE, but used in _caml_program from /var/folders/g5/jcg10xnn5k5c7rkmyhrbjv9m0000gn/T/camlstartupe12639.o. To fix this warning, don't compile with -mdynamic-no-pic or link with -Wl,-no_pie
 # Compilation successful.
