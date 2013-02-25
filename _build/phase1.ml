@@ -24,7 +24,8 @@ let parse (filename : string) (buf : Lexing.lexbuf) : Ast.prog =
 (* 
  * Compile a source binop in to an LL instruction.
  *)
-let compile_binop (b : Ast.binop) : Ll.uid -> Ll.operand -> Ll.operand -> Ll.insn  =
+let compile_binop (b : Ast.binop) : 
+    Ll.uid -> Ll.operand -> Ll.operand -> Ll.insn  =
   let ib b id op1 op2 = (Ll.Binop (id, b, op1, op2)) in
   let ic c id op1 op2 = (Ll.Icmp (id, c, op1, op2)) in
   match b with
@@ -53,7 +54,8 @@ let compile_unop (u : Ast.unop) : Ll.uid -> Ll.operand -> Ll.insn  =
   end
 
 
-let rec compile_exp (e: Ast.exp)(c: Ctxt.t)(l:stream): (operand*stream) = 
+let rec compile_exp (e: Ast.exp)(c: Ctxt.t)
+    (l:stream): (operand*stream) = 
  begin match e with
   | Cint i -> (Const i, l)
   | Id i -> ((Local (Ctxt.lookup i c)) , [])
@@ -132,7 +134,8 @@ and compile_stmt (s:stmt)(c:Ctxt.t):stream =
                           let bodylabel = mk_lbl() in
 			  let postlabel = mk_lbl() in
 		 [L(postlabel)]@[J(Br prelabel)]@cs@[L(bodylabel)]
-			  @[J((Ll.Cbr(op,bodylabel,postlabel)))]@eval@[L(prelabel)]@[J(Br prelabel)]
+			  @[J((Ll.Cbr(op,bodylabel,postlabel)))]@
+		   eval@[L(prelabel)]@[J(Br prelabel)]
     | For ((var_decl_list),exp_opt,stmt_op,stmt) -> 
       let evs = emit_vardecl_stream (var_decl_list) c in
       let c2 = snd(evs) in
@@ -197,7 +200,8 @@ let rec get_blocks (insns:stream):bblock list =
 			end
 		  |[] -> failwith "bad formatting"
 		  end in
-		let newblock = {label = l; insns = fst(g); terminator = terminator} in
+		let newblock = {label = l; 
+				insns = fst(g); terminator = terminator} in
 	      	begin match snd(g) with
 		  |h1::t1->
 		     	newblock::get_blocks t1

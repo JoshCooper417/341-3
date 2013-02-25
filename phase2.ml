@@ -165,7 +165,7 @@ let rec get_next_insn_block(bl: (bblock list))
   | [] -> []
   end 
 
-let ctr = ref 0l
+
 
 let rec print_map(map:((uid* int32) list)): unit =
   begin match map with
@@ -174,13 +174,14 @@ let rec print_map(map:((uid* int32) list)): unit =
     |[]->()
 end
 
-let rec get_assoc_nums (b: Ll.insn list) : (int32 list) =
+
+let rec get_assoc_nums (b: Ll.insn list) (ctr: int32 ref) : (int32 list) =
   begin match b with 
  | h::t-> begin match h with
                 | Alloca u -> ctr := (Int32.add !ctr 1l);
 		  let i:int32 = !ctr in
-		  i::(get_assoc_nums t)
-		| _ -> get_assoc_nums t
+		  i::(get_assoc_nums t ctr)
+		| _ -> get_assoc_nums t ctr
             end
   | [] -> []
  end 
@@ -200,11 +201,11 @@ let rec map_uids (b: Ll.insn list) (nums: int32 list):
   | []-> []
   end
 
-let rec map_vardecls (bl: bblock list) :  ((uid*(int32*bool)) list) =
+let rec map_vardecls (bl: bblock list)(ctr:int32 ref):((uid*(int32*bool)) list)=
    begin match bl with
-   | h:: t-> let n = (get_assoc_nums  h.Ll.insns) in 
+   | h:: t-> let n = (get_assoc_nums  h.Ll.insns ctr) in 
              let l = (map_uids h.Ll.insns n) in
-             l@(map_vardecls t)
+             l@(map_vardecls t ctr)
    | [] -> []
    end
 
@@ -220,12 +221,12 @@ let rec print_blocks (c:Cunit.cunit):unit =
 
   
 let compile_prog (prog : Ll.prog) : Cunit.cunit =
-    ctr:=0l;
+      let ctr = ref 0l in
  (* Printf.printf "\n\n\n%s\n" (Ll.string_of_prog prog);*)
     let block_name = (Platform.decorate_cdecl "program") in
     let entrylbl = mk_lbl_named block_name in
     let blocklist = prog.ll_cfg in
-    let varmap = map_vardecls blocklist in
+    let varmap = map_vardecls blocklist ctr in
     let l = List.rev (get_next_insn_block blocklist varmap)in
     let blocks =
     begin match l with
